@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>vdom test</title>
+</head>
+<body>
+
+<div id="app"></div>
+
+<script src="browser.min.js"></script>
+<script src="vdom.js"></script>
+<script>
+// 设置别名，为了兼容 jsx
+let React = {createElement}
+let ReactDOM = {render}
+</script>
+
+<script type="text/babel">
+let tree1 =
+<div id="container">
+  <h1 style="color:blue">simple virtal dom</h1>
+  <p style="color:red" class="desc">Hello, virtual-dom!</p>
+  <ul class="list">
+    <li>item-1</li>
+    <li>item-2</li>
+    <li>item-3</li>
+  </ul>
+</div>
+
+let tree2 =
+<div id="container">
+  <h1 style="color:red">simple virtal dom</h1>
+  <p style="color:blue" class="desc">Hello, virtual-dom!!!</p>
+  <ul class="list">
+    <li>item-3</li>
+    <li>item-2</li>
+    <li>item-1</li>
+  </ul>
+</div>
+
+let app = ReactDOM.render(
+  tree1,
+  document.getElementById('app')
+)
+
+setTimeout(function () {
+  let patches = diff(tree1, tree2)
+  // console.log(patches)
+  patch(patches)
+}, 2000)
+</script>
+</body>
+</html>
